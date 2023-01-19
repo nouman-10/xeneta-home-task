@@ -1,29 +1,22 @@
+from datetime import datetime, timedelta
 from typing import Dict, List, Tuple
 
 from utils.connect_db import cursor
 from utils.sql_queries import PORT_QUERY, PRICE_QUERY, REGION_QUERY
 
 
-def extract_year_month_date(date: str) -> Tuple[str]:
-    return date.split("-")[0], date.split("-")[1], date.split("-")[2]
-
-
 def calculate_dates_between_two_dates(date_from: str, date_to: str) -> List[str]:
-    year_from, month_from, day_from = extract_year_month_date(date_from)
-    year_to, month_to, day_to = extract_year_month_date(date_to)
+    date_from_dt = datetime.strptime(date_from, "%Y-%m-%d")
+    date_to_dt = datetime.strptime(date_to, "%Y-%m-%d")
 
     dates = []
     while True:
-        dates.append(f"{year_from:02}-{month_from:02}-{day_from:02}")
-        if f"{year_from}-{month_from}-{day_from}" == f"{year_to}-{month_to}-{day_to}":
+        dates.append(
+            f"{date_from_dt.year}-{date_from_dt.month:02}-{date_from_dt.day:02}"
+        )
+        if date_from_dt == date_to_dt:
             break
-        day_from = int(day_from) + 1
-        if day_from > 30:
-            day_from = 1
-            month_from = int(month_from) + 1
-            if month_from > 12:
-                month_from = 1
-                year_from = int(year_from) + 1
+        date_from_dt += timedelta(days=1)
     return dates
 
 
