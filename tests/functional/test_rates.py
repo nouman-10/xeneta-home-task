@@ -19,7 +19,6 @@ def test_correct_rates(client, parameters, correct_response):
 @pytest.mark.parametrize("parameters, error", missing_params.items())
 def test_missing_params(client, parameters, error):
     response = client.get("/rates/", query_string=parameters)
-    print(response.json)
     assert response.status_code == 400, response.json == {"errors": [error]}
 
 

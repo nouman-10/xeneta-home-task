@@ -62,6 +62,20 @@ Sample CURL command:
 curl "http://127.0.0.1:5000/rates/?date_from=2016-01-01&date_to=2016-01-10&origin=CNSGH&destination=north_europe_main"
 ```
 
-## Simple Docker Setup
+## Extra Details
 
-To simplify the setup, you can simply build and run the Docker image. Note: you still have to run the Docker setup for PostgresSql as
+### Time Taken:
+
+Total: ~ 4:30 hours
+
+- Initial Setup and building a basic API request (MVP) ~ 30 minutes
+- Organizing the code with proper files/folders ~ 30 minutes
+- Validating the inputs and error handling ~ 45 minutes
+- Testing ~ 2-2:30 hours
+- ReadMe and finalizing everything ~ 30 minutes
+
+### Problems I faced:
+
+One of the problems I faced, as evident from the time taken, was during testing. It was my first time after a long while doing testing on APIs that interact with databases. These days, I am mostly working on APIs for ML models, which have straight-forward testing.
+
+So, building the test DBs and making sure the code uses the test data and not production in the best possible way (i.e, with minimum changes), was something I had to figure out during the testing phase.

@@ -1,14 +1,14 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify
 
 import utils.helper_functions as f
-from utils.validate_input import Request, validate_input, validate_date_range
+from utils.validate_input import RequestData, validate_input, validate_date_range
 
 rates_api = Blueprint("api", __name__)
 
 
 @rates_api.route("/")
 def calculate_rates():
-    request_data = Request.from_request()
+    request_data = RequestData.from_request()
     errors = validate_input(request_data)
     if errors:
         return jsonify({"errors": errors}), 400

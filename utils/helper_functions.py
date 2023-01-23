@@ -6,9 +6,6 @@ from utils.connect_db import cursor
 from utils.sql_queries import PORT_QUERY, PRICE_QUERY, REGION_QUERY
 
 
-IS_TESTING = os.environ.get("TESTING", False)
-
-
 def calculate_dates_between_two_dates(date_from: str, date_to: str) -> List[str]:
     date_from_dt = datetime.strptime(date_from, "%Y-%m-%d")
     date_to_dt = datetime.strptime(date_to, "%Y-%m-%d")

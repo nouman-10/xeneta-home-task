@@ -18,7 +18,7 @@ REGIONS = [r[0] for r in cursor.fetchall()]
 
 
 @dataclass(frozen=True)
-class Request:
+class RequestData:
     date_from: str
     date_to: str
     origin: str
@@ -68,7 +68,7 @@ invalid_messages = {
 }
 
 
-def validate_input(request: Request) -> List[str]:
+def validate_input(request: RequestData) -> List[str]:
     """Validate input parameters"""
     errors = []
     for param in ParamConfig:
