@@ -79,3 +79,10 @@ Total: ~ 4:30 hours
 One of the problems I faced, as evident from the time taken, was during testing. It was my first time after a long while doing testing on APIs that interact with databases. These days, I am mostly working on APIs for ML models, which have straight-forward testing.
 
 So, building the test DBs and making sure the code uses the test data and not production in the best possible way (i.e, with minimum changes), was something I had to figure out during the testing phase.
+
+### Things that can be added
+
+There are some things that can be added here for improvement but I believe most of them would be regarding automation and ease of deployment:
+
+- I have added github actions but I did so purposely at the end, as these can't be tested at the moment due to the database being local (It isn't perfect at the moment either due to the inability to test it)
+- Containerize the application that runs both the postgres and flask app together.
