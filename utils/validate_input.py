@@ -8,6 +8,7 @@ from utils.params import Param, ParamConfig
 from utils.connect_db import cursor
 from utils.sql_queries import PORT_CODES_QUERY, REGION_NAMES_QUERY
 
+
 cursor.execute(PORT_CODES_QUERY)
 
 PORT_CODES = [p[0] for p in cursor.fetchall()]
@@ -59,11 +60,11 @@ value_validator = {
 }
 
 
-invalid_mesages = {
-    Param.DATE_FROM: "date_from is invalid (Correct Format: YYYY-MM-DD)",
-    Param.DATE_TO: "date_to is invalid (Correct Format: YYYY-MM-DD)",
-    Param.ORIGIN: "origin is invalid. Should be either 5 digit port code or a valid region name",
-    Param.DESTINATION: "destination is invalid. Should be either 5 digit port code or a valid region name",
+invalid_messages = {
+    Param.DATE_FROM: "date_from is required and the correct format is YYYY-MM-DD",
+    Param.DATE_TO: "date_to is required and the correct format YYYY-MM-DD",
+    Param.ORIGIN: "origin is required and should be either 5 digit port code or a valid region name",
+    Param.DESTINATION: "destination is required and should be either 5 digit port code or a valid region name",
 }
 
 
@@ -72,7 +73,7 @@ def validate_input(request: Request) -> List[str]:
     errors = []
     for param in ParamConfig:
         if not value_validator[ParamConfig[param]](getattr(request, param)):
-            errors.append(invalid_mesages[ParamConfig[param]])
+            errors.append(invalid_messages[ParamConfig[param]])
     return errors
 
 

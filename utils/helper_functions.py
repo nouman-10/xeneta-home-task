@@ -1,8 +1,12 @@
 from datetime import datetime, timedelta
-from typing import Dict, List, Tuple
+import os
+from typing import Dict, List
 
 from utils.connect_db import cursor
 from utils.sql_queries import PORT_QUERY, PRICE_QUERY, REGION_QUERY
+
+
+IS_TESTING = os.environ.get("TESTING", False)
 
 
 def calculate_dates_between_two_dates(date_from: str, date_to: str) -> List[str]:
@@ -22,20 +26,27 @@ def calculate_dates_between_two_dates(date_from: str, date_to: str) -> List[str]
 
 def find_port_codes(area_slug: str) -> List[str]:
     if len(area_slug) != 5 and not area_slug.isupper():
-        cursor.execute(REGION_QUERY.format(parent_slug=area_slug))
+        cursor.execute(REGION_QUERY, (area_slug,))
         slugs = cursor.fetchall()
         ports = []
+        slugs = [s[0] for s in slugs] if slugs else [area_slug]
         for slug in slugs:
-            cursor.execute(PORT_QUERY.format(parent_slug=slug[0]))
+            cursor.execute(PORT_QUERY, (slug,))
             ports.extend([p[0] for p in cursor.fetchall()])
     else:
         ports = [area_slug]
+
     return ports
 
 
 def find_prices(origin: str, destination: str, date: str) -> List[int]:
     cursor.execute(
-        PRICE_QUERY.format(origin=origin, destination=destination, date=date)
+        PRICE_QUERY,
+        (
+            origin,
+            destination,
+            date,
+        ),
     )
     prices = cursor.fetchall()
     return [p[0] for p in prices]

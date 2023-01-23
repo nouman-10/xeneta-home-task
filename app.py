@@ -1,12 +1,17 @@
+import os
+
 from flask import Flask
-from api.routes.rates import rates_api
 
 
-def create_app():
+def create_app(testing=False):
     app = Flask(__name__)
 
     ## Initialize Config
     app.config.from_pyfile("config.py")
+    os.environ["TESTING"] = str(testing)
+
+    from api.routes.rates import rates_api
+
     app.register_blueprint(rates_api, url_prefix="/rates")
 
     return app
